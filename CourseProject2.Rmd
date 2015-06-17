@@ -52,8 +52,15 @@ df$EVTYPE <- tolower(df$EVTYPE)
 patternsToRemove <- c("monthly", "?")
 greplString <- paste(patternsToRemove, collapse = "|")
 df <- df[(grepl(greplString, df$EVTYPE)),]
+
+#remove everything that has summary in it
 df <- df[(!grepl("summary", df$EVTYPE)),]
-dim(df)
+
+#turn TSTM into Thunderstorm
+tstorm <- c("thunderstorms", "thunderstormw", "tstm", "thunderstorminds", "thunderstorminds", "thunderstrom", "thundertorm", "thundertsorm", "thundestorm", "thunerstorm", "thunderstorminds")
+tstormGsub <- paste(tstorm, collapse = "|")
+df$EVTYPE <- gsub(tstormGsub, "thunderstorm", df$EVTYPE)
+sort(unique(df$EVTYPE))
 ```
 
 
