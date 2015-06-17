@@ -1,0 +1,61 @@
+---
+title: "CourseProject1"
+author: "doyougnu"
+date: "June 16, 2015"
+output: html_document
+---
+
+##Synopsis
+This report analyzes data from the U.S. National Oceanic and Atmospheric
+Administration's (NOAA) storm database. The goal of this report is twofold: 1.
+To determine which weather event, in the given database, is most harmful to 
+human health. 2. Of the recorded weather events, which events are correlated to 
+have the greatest amount of economic consequences. Economic consequences is used
+vaguely here, this convievably could be a benefit, or a hinderance. Given the 
+dataset this author chose to focus on economic damage, in place of economic
+consequences. It was found that....
+
+##Data Preprocessing
+The following environment was used to process, and analyze the date:
+
+```{r environment, echo=TRUE}
+Sys.info()
+R.Version()
+```
+
+The data is available [here][1], and comes in bzip2 form. To load this into R
+we perform the following operations:
+
+```{r dataPreprocessing, echo=TRUE, cache=TRUE}
+download.file("https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2", "FStormData.csv.bz2", method = "curl")
+df <- read.csv(bzfile("FStormData.csv"), header = TRUE, sep = ",")
+```
+
+Now lets have a look at the first few lines and how R is interpreting the data:
+
+```{r, quickLook, echo=TRUE}
+str(df)
+```
+
+This analysis is focused on the EVTYPE (Event Type) variable, as such it must be
+cleaned in order to be useful. First of all we cannot have "THUNDERSTORM" and 
+"TSTM" mean the same thing in our analysis. Also, white spaces and special 
+characters must be removed, and any other "EVTYPE" that does not make sense for
+this analysis:
+
+```{r EVTYPEclean, echo=TRUE}
+#remove white spaces
+df$EVTYPE <- gsub("^\\s+|\\s+$", "", df$EVTYPE)
+df$EVTYPE <- tolower(df$EVTYPE)
+
+#remove summaries, monthly/weekly summaries
+patternsToRemove <- c("monthly", "?")
+greplString <- paste(patternsToRemove, collapse = "|")
+df <- df[(grepl(greplString, df$EVTYPE)),]
+df <- df[(!grepl("summary", df$EVTYPE)),]
+dim(df)
+```
+
+
+<!---Links--->
+[1]: https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2
