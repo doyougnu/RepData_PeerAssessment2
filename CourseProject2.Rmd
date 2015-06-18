@@ -43,7 +43,7 @@ cleaned in order to be useful. First of all we cannot have "THUNDERSTORM" and
 characters must be removed, and any other "EVTYPE" that does not make sense for
 this analysis:
 
-```{r EVTYPEclean, echo=TRUE}
+```{r EVTYPEclean, echo=TRUE, cache=TRUE}
 #remove white spaces
 df$EVTYPE <- gsub("^\\s+|\\s+$", "", df$EVTYPE)
 df$EVTYPE <- tolower(df$EVTYPE)
@@ -60,9 +60,20 @@ df <- df[(!grepl("summary", df$EVTYPE)),]
 tstorm <- c("thunderstorms", "thunderstormw", "tstm", "thunderstorminds", "thunderstorminds", "thunderstrom", "thundertorm", "thundertsorm", "thundestorm", "thunerstorm", "thunderstorminds")
 tstormGsub <- paste(tstorm, collapse = "|")
 df$EVTYPE <- gsub(tstormGsub, "thunderstorm", df$EVTYPE)
-sort(unique(df$EVTYPE))
 ```
 
+Now clean the economic data by converting the PROPDMGEXP and CROPDMGEXP variables
+to scientific notation
 
+```{r econDataClean, echo=TRUE, cache=TRUE, warning=FALSE}
+df$PROPDMGEXP[df$PROPDMGEXP == "K"] <- "000"
+df$PROPDMGEXP[df$PROPDMGEXP == "M"] <- "000000"
+df$PROPDMGEXP[df$PROPDMGEXP == "B"] <- "000000000"
+df$CROPDMGEXP[df$CROPDMGEXP == "K"] <- "000"
+df$CROPDMGEXP[df$CROPDMGEXP == "M"] <- "000000"
+df$CROPDMGEXP[df$CROPDMGEXP == "B"] <- "000000000"
+head(df$PROPDMGEXP)
+head(df$CROPDMGEXP)
+```
 <!---Links--->
 [1]: https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2
