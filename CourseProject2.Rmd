@@ -15,15 +15,10 @@ vaguely here, as one could analyze the oppurtunity cost of lost lives or crops,
 or one could merely ignore consequences of a lost. Given the 
 dataset this author chose to focus on economic damage, in place of economic
 consequences. It was found that the tornado is the most costly weather event in
-terms of human health. This was a consequence of the simple model that was 
-chosen - that of a sum between deaths and injuries. As such, tornadoes produce
-a large amount of injuries; by dominating the injury variable in the model the
-tornado becomes the weather event that produces the largest "human Impact". The
-most costly weather event was found the be a flood. The flood weather event 
-dominated the model in similar fashion to the tornado, only this time it the
-property damage varaible was maximized, instead of injuries. In sum, both 
-of these results imply that the dataset should be analyzed in terms of 
-geographic data, because floods and tornadoes are location specific.
+terms of human health. The most economically damaging weather event was found 
+the be a flood. In sum, both of these results imply that the dataset should 
+be analyzed in  terms of geographic data, because floods and tornadoes are 
+location specific.
 
 ##Data Preprocessing
 The following environment was used to process, and analyze the date:
